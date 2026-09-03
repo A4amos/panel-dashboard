@@ -8,6 +8,10 @@ on:
     branches:
       - main
 
+permissions:
+  id-token: write
+  contents: read
+
 env:
     IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
     DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
