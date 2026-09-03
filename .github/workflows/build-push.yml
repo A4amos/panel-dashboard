@@ -23,8 +23,8 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     steps:
-      - name: Debug OIDC
-        uses: github/actions-oidc-debugger@main   
+    #   - name: Debug OIDC
+    #     uses: github/actions-oidc-debugger@main   
 
       - name: Checkout code
         uses: actions/checkout@v3
@@ -44,7 +44,7 @@ jobs:
            creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Log in to Amazon ECR
-        uses: aws-actions/configure-aws-credentials@v3
+        uses: aws-actions/configure-aws-credentials@v6
         with: 
             role-to-assume: ${{ secrets.OIDC_ARN }}
             aws-region: ${{ env.AWS_REGION }}
