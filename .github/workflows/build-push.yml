@@ -23,6 +23,9 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     steps:
+      - name: Debug OIDC
+        uses: github/actions-oidc-debugger@main   
+
       - name: Checkout code
         uses: actions/checkout@v3
 
