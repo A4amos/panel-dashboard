@@ -45,32 +45,24 @@ jobs:
         with: 
             role-to-assume: ${{ secrets.OIDC_ARN }}
             aws-region: ${{ env.AWS_REGION }}
-            
+        
+      - name: Build and push Docker image to Docker Hub
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ env.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
 
+      - name: Build and push Docker image to Azure Container Registry
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ env.ACR_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
 
-
-
-
-
-
-
-    #   - name: Build and push Docker image to Docker Hub
-    #     uses: docker/build-push-action@v4
-    #     with:
-    #       context: .
-    #       push: true
-    #       tags: ${{ env.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-
-    #   - name: Build and push Docker image to Azure Container Registry
-    #     uses: docker/build-push-action@v4
-    #     with:
-    #       context: .
-    #       push: true
-    #       tags: ${{ env.ACR_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-
-    #   - name: Build and push Docker image to Amazon ECR
-    #     uses: docker/build-push-action@v4
-    #     with:
-    #       context: .
-    #       push: true
-    #       tags: ${{ env.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+      - name: Build and push Docker image to Amazon ECR
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ env.ECR_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
