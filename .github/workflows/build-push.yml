@@ -18,6 +18,7 @@ env:
     ACR_REGISTRY: ${{ secrets.ACR_REGISTRY }}
     ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
     AWS_REGION: ${{ secrets.AWS_REGION }}
+    ACR_NAME: ${{ secrets.ACR_NAME }}
 
 jobs:
   build-and-push:
@@ -52,6 +53,10 @@ jobs:
           context: .
           push: true
           tags: ${{ env.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+      - name: Authenticate with Azure Container Registry
+        run: |
+          az acr login --name ${{ env.ACR_NAME }}
 
       - name: Build and push Docker image to Azure Container Registry
         uses: docker/build-push-action@v4
